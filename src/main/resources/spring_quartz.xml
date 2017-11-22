@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="jobDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass" value="com.rosydawn.bean.job.FirstSimpleJobBean"/>
+        <property name="name" value="firstJobDetail"/>
+        <property name="group" value="testJobGroup"/>
+        <property name="durability" value="true"/>
+        <property name="description" value="第一个JobDetail"/>
+        <!--该任务是否在重启开机后执行宕机中断的任务，默认为false-->
+        <property name="requestsRecovery" value="false"/>
+    </bean>
+
+    <bean name="testScheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <!--<property name="dataSource" ref="dataSource"/>-->
+        <property name="applicationContextSchedulerContextKey" value="applicationContextKey"/>
+        <property name="configLocation" value="classpath:quartz.properties"/>
+        <property name="autoStartup" value="true"/>
+    </bean>
+</beans>
