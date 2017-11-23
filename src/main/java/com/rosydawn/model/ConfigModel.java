@@ -8,8 +8,9 @@ import java.util.Date;
 public class ConfigModel {
     private String configId;
     private String systemName;
-    private String itemName;
-    private String itemValue;
+    private String groupName;
+    private String configName;
+    private String configValue;
     private Date insertTime;
     private Date updateTime;
 
@@ -18,8 +19,9 @@ public class ConfigModel {
         return "ConfigModel{" +
                 "configId='" + configId + '\'' +
                 ", systemName='" + systemName + '\'' +
-                ", itemName='" + itemName + '\'' +
-                ", itemValue='" + itemValue + '\'' +
+                ", groupName='" + groupName + '\'' +
+                ", configName='" + configName + '\'' +
+                ", configValue='" + configValue + '\'' +
                 ", insertTime=" + insertTime +
                 ", updateTime=" + updateTime +
                 '}';
@@ -41,20 +43,28 @@ public class ConfigModel {
         this.systemName = systemName;
     }
 
-    public String getItemName() {
-        return itemName;
+    public String getGroupName() {
+        return groupName;
     }
 
-    public void setItemName(String itemName) {
-        this.itemName = itemName;
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
     }
 
-    public String getItemValue() {
-        return itemValue;
+    public String getConfigName() {
+        return configName;
     }
 
-    public void setItemValue(String itemValue) {
-        this.itemValue = itemValue;
+    public void setConfigName(String configName) {
+        this.configName = configName;
+    }
+
+    public String getConfigValue() {
+        return configValue;
+    }
+
+    public void setConfigValue(String configValue) {
+        this.configValue = configValue;
     }
 
     public Date getInsertTime() {

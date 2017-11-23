@@ -1,58 +1,49 @@
 package com.rosydawn.service.impl;
 
+import com.rosydawn.dao.ConfigDao;
+import com.rosydawn.dao.SchedulerDao;
+import com.rosydawn.model.ConfigModel;
 import com.rosydawn.service.SchedulerService;
-import com.rosydawn.util.QuartzUtil;
 import org.apache.log4j.Logger;
-import org.quartz.*;
-import org.springframework.scheduling.quartz.SchedulerFactoryBean;
-
-import static org.quartz.CronScheduleBuilder.cronSchedule;
-import static org.quartz.TriggerBuilder.newTrigger;
+import org.quartz.CronTrigger;
+import org.quartz.TriggerKey;
 
 /**
- * Created by Vincent on 2017-11-22.
+ * Created by Vincent on 2017-11-21.
  */
 public class SchedulerServiceImpl implements SchedulerService {
     private static final Logger logger = Logger.getLogger(SchedulerServiceImpl.class);
 
-    private SchedulerFactoryBean schedulerFactoryBean;
+    private SchedulerDao schedulerDao;
+    private ConfigDao configDao;
 
-    /**
-     *
-     * @param triggerKey
-     * @param cronExpression
-     * @param triggerDescription
-     */
-    public void updateCronTrigger(TriggerKey triggerKey, String cronExpression,
-                                  String triggerDescription) {
-        Scheduler scheduler = schedulerFactoryBean.getScheduler();
-        try {
-            CronTrigger newCronTrigger = newTrigger()
-                    .withIdentity(triggerKey)
-                    .withSchedule(cronSchedule(cronExpression))
-                    .withDescription(triggerDescription)
-                    .build();
-            scheduler.rescheduleJob(triggerKey, newCronTrigger);
-        } catch (Exception e) {
-            logger.error("update CronTrigger error!", e);
-            throw new RuntimeException("update CronTrigger error!", e);
-        }
-    }
-
-    public void addJobDetail(JobDetail jobDetail, boolean replaceIfExist) {
-        if (jobDetail.isDurable()) {
-            Scheduler scheduler = schedulerFactoryBean.getScheduler();
-            try {
-                scheduler.addJob(jobDetail, replaceIfExist);
-            } catch (SchedulerException e) {
-                logger.error("add a new JobDetail error!", e);
-                throw new RuntimeException("add a new JobDetail error!", e);
+    @Override
+    public void updateTrigger(TriggerKey triggerKey) {
+        logger.info("update the trigger whose trigger key is " + triggerKey);
+        CronTrigger cronTrigger = schedulerDao.selectCronTrigger(triggerKey);
+        if (cronTrigger != null) {
+            String description = cronTrigger.getDescription();
+            ConfigModel configModel = configDao.selectConfigModel("");
+            if (configModel != null) {
+                String cronExpression = configModel.getConfigValue();
+                schedulerDao.updateCronTrigger(triggerKey, cronExpression, description);
             }
-        } else {
-            logger.error("the added JobDetail is not durable!");
-            throw new RuntimeException("the added JobDetail is not durable!");
         }
     }
 
+    public SchedulerDao getSchedulerDao() {
+        return schedulerDao;
+    }
 
+    public void setSchedulerDao(SchedulerDao schedulerDao) {
+        this.schedulerDao = schedulerDao;
+    }
+
+    public ConfigDao getConfigDao() {
+        return configDao;
+    }
+
+    public void setConfigDao(ConfigDao configDao) {
+        this.configDao = configDao;
+    }
 }
