@@ -1,0 +1,14 @@
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.rosydawn.model">
+    <class name="ConfigModel" table="QUARTZ_CONFIG">
+        <id name="configId" column="CONFIG_ID"/>
+        <property name="systemName" column="SYSTEM_NAME"/>
+        <property name="groupName" column="GROUP_NAME"/>
+        <property name="configName" column="CONFIG_NAME"/>
+        <property name="configValue" column="CONFIG_VALUE"/>
+        <property name="insertTime" column="INSERT_TIME"/>
+        <property name="updateTime" column="UPDATE_TIME"/>
+    </class>
+</hibernate-mapping>

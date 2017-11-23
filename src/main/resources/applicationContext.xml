@@ -78,7 +78,7 @@
     </bean>
 
     <!--注入hibernate使用的SessionFactory对象-->
-    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
         <property name="hibernateProperties">
             <props>
@@ -91,19 +91,21 @@
             </props>
         </property>
         <!--使用mappingResources，指定要加载的配置文件，但是文件多了不方便-->
-        <!--<property name="mappingResources">
-            <list><value>xxx.hbm.xml</value></list>
-        </property>-->
+        <property name="mappingResources">
+            <list>
+                <value>com/rosydawn/model/ConfigModel.hbm.xml</value>
+            </list>
+        </property>
         <!--直接指定一个配置文件所在的目录，方便了许多-->
         <!--<property name="mappingDirectoryLocations">
             <list><value>mapping</value></list>
         </property>-->
         <!--如果用了注解，可以使用packagesToScan、annotatedPackages、annotatedClasses来设置-->
-        <property name="packagesToScan">
-            <list>
-                <value>com</value>
-            </list>
-        </property>
+        <!--<property name="packagesToScan">-->
+        <!--<list>-->
+        <!--<value>com.rosydawn</value>-->
+        <!--</list>-->
+        <!--</property>-->
     </bean>
 
     <!--配置Spring的事务管理-->

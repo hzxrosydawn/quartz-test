@@ -5,11 +5,10 @@
        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="testJobDetail01" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
-        <property name="name" value="firstJobDetail"/>
-        <property name="group" value="testJobGroup"/>
+        <property name="name" value="jobDetail01"/>
+        <property name="group" value="jobGroup01"/>
         <property name="jobClass" value="com.rosydawn.bean.job.TestJobBean"/>
         <property name="durability" value="true"/>
-        <property name="description" value="第一个JobDetail"/>
         <!--该任务是否在重启开机后执行宕机中断的任务，默认为false-->
         <property name="requestsRecovery" value="false"/>
     </bean>
